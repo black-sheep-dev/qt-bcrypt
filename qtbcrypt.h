@@ -8,21 +8,15 @@
 //
 // ----------------------------------------------------------------------------
 
-
-
 #ifndef __QT_BCRYPT_H__
 #define __QT_BCRYPT_H__
 
-
-
 #include <QString>
-
-
 
 class QtBCrypt
 {
 public:
-    static QString generateSalt();
+    static QString generateSalt(int randomBytesSize = 16, int iterationCount = 12);
     static QString hashPassword(const QString& password, const QString& salt);
 
 private:

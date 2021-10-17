@@ -12,26 +12,16 @@
 
 #include "qtbcrypt.h"
 
-
-
-#include "qtbcrypt.h"
 #include <time.h>
-
-
 
 extern "C" {
     #include <openwall_crypt/ow-crypt.h>
 }
 
-
-
-QString QtBCrypt::generateSalt()
+QString QtBCrypt::generateSalt(int randomBytesSize, int iterationCount)
 {
-    const int randomBytesSize = 16;
     char randomBytes[randomBytesSize];
     QtBCrypt::generateRandomBytes(randomBytes, randomBytesSize);
-
-    int iterationCount = 12;
 
     const char* bcryptPrefix = "$2a$";
 
@@ -43,15 +33,11 @@ QString QtBCrypt::generateSalt()
     return salt ? salt : "";
 }
 
-
-
 QString QtBCrypt::hashPassword(const QString& password, const QString& salt)
 {
     char* hash = crypt(password.toLocal8Bit().data(), salt.toLocal8Bit().data());
     return  hash ? hash : "";
 }
-
-
 
 void QtBCrypt::generateRandomBytes(char* outBuffer, int bufferSize)
 {
